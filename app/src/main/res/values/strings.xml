@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">homework_25</string>
     <string name="my_map_api_key">AIzaSyA1aZd4PNqSbA4JUGIYyctlEPBHAXoFIkY</string>
+    <string name="search">search</string>
 </resources>
