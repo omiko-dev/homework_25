@@ -1,8 +1,5 @@
 package com.example.homework_25.presentation.screen.map
 
-import android.location.Geocoder
-import android.util.Log
-import android.widget.Toast
 import com.example.homework_25.R
 import com.example.homework_25.databinding.FragmentMapsBinding
 import com.example.homework_25.presentation.base.BaseFragment
@@ -43,34 +40,15 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>(FragmentMapsBinding::infl
         }
     }
 
-    override fun onSearch(countryName: String) {
-        googleMap?.let {
-            searchPlace(countryName)
-        } ?: Log.e("MapsFragment", "Google map not initialized yet")
-    }
 
     private var marker: Marker? = null
 
-    private fun searchPlace(place: String) {
-        try {
-            val geocoder = Geocoder(requireContext())
-            val addresses = geocoder.getFromLocationName(place, 1)
 
-            if (!addresses.isNullOrEmpty()) {
-                marker?.remove()
 
-                val location = LatLng(addresses[0].latitude, addresses[0].longitude)
-                val markerOptions = MarkerOptions()
-                    .position(location)
-                    .title(place)
-                marker = googleMap?.addMarker(markerOptions)
-                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
-            } else {
-                Toast.makeText(context, "Place not found", Toast.LENGTH_SHORT).show()
-            }
-
-        } catch (e: Exception) {
-            Toast.makeText(context, "Place not found", Toast.LENGTH_SHORT).show()
-        }
+    override fun onSearch(latLng: LatLng) {
+        val markerOptions = MarkerOptions()
+            .position(latLng)
+        marker = googleMap?.addMarker(markerOptions)
+        googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
     }
 }
